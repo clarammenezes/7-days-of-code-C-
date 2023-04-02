@@ -15,7 +15,7 @@ namespace ConsoleApp1
 
         public string nomeMascote { get; set; }
 
-        public List<string> mascoteAdotado = new List<string>();
+        public List<Mascote> mascoteAdotado = new List<Mascote>();
 
         public void menuPrincipal()
         {
@@ -51,10 +51,11 @@ namespace ConsoleApp1
                     Console.WriteLine("ESCOLHA UM MASCOTE PARA ADOTAR\n");
                     Console.WriteLine("1 - GENGAR\n2 - CLEFAIRY\n3 - LUGIA\n4 - GIRAFARIG");
                     string numeroMascote = Console.ReadLine();
+
                     switch (numeroMascote)
                     {
                         case "1":
-                            nomeMascote = "GENGAR";
+                            nomeMascote = "GENGAR";                    
                             break;
                         case "2":
                             nomeMascote = "CLEFAIRY";
@@ -72,14 +73,31 @@ namespace ConsoleApp1
                 case "2":
                     Console.WriteLine("SEUS MASCOTES SÃO: ");
                     string mascotes = "";
-                    foreach (var mascote in mascoteAdotado)
+                    foreach (Mascote mascote in mascoteAdotado)
                     {
-                        mascotes += mascote + "\n";
+                        mascotes += mascoteAdotado.IndexOf(mascote) + " - " +  mascote.name + "\n";
                     }
+
                     Console.WriteLine(mascotes);
+
+                    string escolherMascote = Console.ReadLine();
+
+                    while (Int32.Parse(escolherMascote) > mascoteAdotado.Count)
+                    {
+                        Console.WriteLine("Index do mascote não existe na lista!");
+                        escolherMascote = Console.ReadLine();
+                    }
+
+                    Tamagotchi tamagotchi = new Tamagotchi();
+
+                    tamagotchi.mascote = mascoteAdotado.ElementAt(Int32.Parse(escolherMascote));
+
+                    this.statusPokemon(tamagotchi);
+                    
+
                     break;
                 case "3":
-                    Console.WriteLine();
+                    System.Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Nenhuma escolha foi aceita!");
@@ -110,7 +128,7 @@ namespace ConsoleApp1
                     switch (escolhaAdotar)
                     {
                         case "1":
-                            mascoteAdotado.Add(mascote);
+                            mascoteAdotado.Add(ChamadasREST.invocarChamadaGet("https://pokeapi.co/api/v2/pokemon/" + mascote.ToLower()));
                             
                             Console.WriteLine("PARABÉNS PELA A ADOÇÃO DO SEU NOVO MASCOTE, CONFIRA O OVO CHOCANDO DO SEU MASCOTE");
                             Console.WriteLine("                                                                          \r\n                                                                          \r\n                                                                          \r\n                                ████████                                  \r\n                              ██        ██                                \r\n                            ██▒▒▒▒        ██                              \r\n                          ██▒▒▒▒▒▒      ▒▒▒▒██                            \r\n                          ██▒▒▒▒▒▒      ▒▒▒▒██                            \r\n                        ██  ▒▒▒▒        ▒▒▒▒▒▒██                          \r\n                        ██                ▒▒▒▒██                          \r\n                      ██▒▒      ▒▒▒▒▒▒          ██                        \r\n                      ██      ▒▒▒▒▒▒▒▒▒▒        ██                        \r\n                      ██      ▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒██                        \r\n                      ██▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒██                        \r\n                        ██▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒██                          \r\n                        ██▒▒▒▒            ▒▒▒▒██                          \r\n                          ██▒▒              ██                            \r\n                            ████        ████                              \r\n                                ████████                                  \r\n                                                                          \r\n                                                                          \r\n                                                                          \r\n");
@@ -132,7 +150,43 @@ namespace ConsoleApp1
             
 
         }
+        public void statusPokemon(Tamagotchi mascote)
+        {
+            Console.Clear();
+            Console.WriteLine("O que deseja fazer com seu mascote?");
+            Console.WriteLine("1 - Alimentar " + mascote.mascote.name + "\n2 - Brincar " + mascote.mascote.name + "\n3 - Descansar " +
+                mascote.mascote.name + "\n4 - Voltar");
+            Console.WriteLine("Escolha uma opção: ");
+            int escolha = Int32.Parse(Console.ReadLine());
+            if (mascoteAdotado != null)
+            {
+                while(escolha != 0)
+                {
+                    switch (escolha)
+                    {
+                        case 1:
+                            mascote.AlimentarMascote();
+                            System.Threading.Thread.Sleep(1000);
+                            statusPokemon(mascote);
+                            break;
+                        case 2:
+                            mascote.BrincarMascote();
+                            System.Threading.Thread.Sleep(1000);
+                            statusPokemon(mascote);
+                            break;
+                        case 3:
+                            mascote.DescansarMascote();
+                            System.Threading.Thread.Sleep(1000);
+                            statusPokemon(mascote);
+                            break;
+                        case 4:
+                            menuMascote();
+                            break;
+                    }
+                }
+            }
 
+        }
 
     }
 }

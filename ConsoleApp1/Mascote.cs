@@ -17,21 +17,21 @@ namespace ConsoleApp1
 
         public override string ToString()
         {
-            string tipos = "", habilidades = "";
-            foreach (var tipo in types)
-            {
-                tipos += tipo.ToString() + "\n";
-            }
-            foreach (var habilidade in abilities)
-            {
-                habilidades += habilidade.ToString() + "\n";
-            }
+            //string tipos = "", habilidades = "";
+            //foreach (var tipo in types)
+            //{
+            //    tipos += tipo.ToString() + "\n";
+            //}
+            //foreach (var habilidade in abilities)
+            //{
+            //    habilidades += habilidade.ToString() + "\n";
+            //}
 
             return $"Nome: {name}\n" +
                    $"Altura: {height}\n" +
-                   $"Peso: {weight}\n" +
-                   $"Tipo(s): {tipos}\n" +
-                   $"Habilidades: {habilidades}";
+                   $"Peso: {weight}\n";
+                   //$"Tipo(s): {tipos}\n" +
+                   //$"Habilidades: {habilidades}";
         }
 
         public Mascote() { }

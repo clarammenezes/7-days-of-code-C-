@@ -81,6 +81,7 @@
     <Compile Include="AbilityDescription.cs" />
     <Compile Include="AbilityURL.cs" />
     <Compile Include="ChamadasREST.cs" />
+    <Compile Include="Tamagotchi.cs" />
     <Compile Include="Mascote.cs" />
     <Compile Include="MenuPrincipal.cs" />
     <Compile Include="Program.cs" />
